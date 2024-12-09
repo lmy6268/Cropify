@@ -8,6 +8,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
@@ -37,7 +38,7 @@ internal fun ImageOverlay(
       restoreToCount(checkPoint)
     }
     drawFrame(offset, size, option)
-    drawCorner(offset, size, tolerance / 2, option)
+    drawCorner(offset, size, tolerance / 2 + 35, option)
     drawGrid(offset, size, option)
   }
 }
@@ -64,70 +65,81 @@ private fun DrawScope.drawCorner(
 ) {
   val rect = Rect(offset, size)
   val width = option.frameWidth.toPx()
-  val offsetFromVertex = 4.dp.toPx()
+  val offsetFromVertex = 2.dp.toPx()
+
+  val cornerWidth = width + 3.dp.toPx()
+  val cornerColor = Color(0xFFF2DF98)
 
   rect.topLeft
     .translate(offsetFromVertex, offsetFromVertex)
     .let { start ->
       drawLine(
-        start = start.translateX(-width / 2),
+        start = start.translateX(-cornerWidth / 2 + 10),
         end = start.translateX(cornerLength),
-        color = option.frameColor,
-        strokeWidth = width
+        color = cornerColor,
+        strokeWidth = cornerWidth,
+        cap = StrokeCap.Round
       )
       drawLine(
         start = start,
         end = start.translateY(cornerLength),
-        color = option.frameColor,
-        strokeWidth = width
+        color = cornerColor,
+        strokeWidth = cornerWidth,
+        cap = StrokeCap.Round
       )
     }
   rect.topRight
     .translate(-offsetFromVertex, offsetFromVertex)
     .let { start ->
       drawLine(
-        start = start.translateX(width / 2),
+        start = start.translateX(cornerWidth / 2 - 10),
         end = start.translateX(-cornerLength),
-        color = option.frameColor,
-        strokeWidth = width
+        color = cornerColor,
+        strokeWidth = cornerWidth,
+        cap = StrokeCap.Round
       )
       drawLine(
         start = start,
         end = start.translateY(cornerLength),
-        color = option.frameColor,
-        strokeWidth = width
+        color = cornerColor,
+        strokeWidth = cornerWidth,
+        cap = StrokeCap.Round
       )
     }
   rect.bottomLeft
     .translate(offsetFromVertex, -offsetFromVertex)
     .let { start ->
       drawLine(
-        start = start.translateX(-width / 2),
+        start = start.translateX(-cornerWidth / 2 + 10),
         end = start.translateX(cornerLength),
-        color = option.frameColor,
-        strokeWidth = width
+        color = cornerColor,
+        strokeWidth = cornerWidth,
+        cap = StrokeCap.Round
       )
       drawLine(
         start = start,
         end = start.translateY(-cornerLength),
-        color = option.frameColor,
-        strokeWidth = width
+        color = cornerColor,
+        strokeWidth = cornerWidth,
+        cap = StrokeCap.Round
       )
     }
   rect.bottomRight
     .translate(-offsetFromVertex, -offsetFromVertex)
     .let { start ->
       drawLine(
-        start = start.translateX(width / 2),
+        start = start.translateX(cornerWidth / 2 - 10),
         end = start.translateX(-cornerLength),
-        color = option.frameColor,
-        strokeWidth = width
+        color = cornerColor,
+        strokeWidth = cornerWidth,
+        cap = StrokeCap.Round
       )
       drawLine(
         start = start,
         end = start.translateY(-cornerLength),
-        color = option.frameColor,
-        strokeWidth = width
+        color = cornerColor,
+        strokeWidth = cornerWidth,
+        cap = StrokeCap.Round
       )
     }
 }
